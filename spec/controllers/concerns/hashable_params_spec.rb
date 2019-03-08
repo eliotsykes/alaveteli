@@ -28,11 +28,12 @@ describe HashableParams do
       it { is_expected.to eq({}) }
     end
 
-    context 'passed a hash' do
+    context 'passed a populated hash' do
       let(:raw_params) { { foo: 1, bar: 2 } }
-      it { is_expected.to match_array(raw_params) }
 
-      it_behaves_like 'populated_params_provided'
+      it 'raises an error' do
+        expect { subject }.to raise_error(NoMethodError)
+      end
     end
 
     context 'passed an instance of ActionController::Parameters' do
