@@ -40,6 +40,8 @@ class ApplicationController < ActionController::Base
   before_action :collect_locales
   after_action  :persist_session_timestamp
 
+  skip_before_action :verify_authenticity_token, unless: :user?
+
   def set_vary_header
     response.headers['Vary'] = 'Cookie'
   end
@@ -254,18 +256,6 @@ class ApplicationController < ActionController::Base
 
   def user?
     !session[:user_id].nil?
-  end
-
-  # Override the Rails method to only set the CSRF form token if there is a
-  # logged in user
-  def form_authenticity_token(*args)
-    if user?
-      if rails5?
-        super
-      else
-        super()
-      end
-    end
   end
 
   # Check the user is logged in
