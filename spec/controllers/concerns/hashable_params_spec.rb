@@ -6,18 +6,6 @@ describe HashableParams do
   describe '#params_to_unsafe_hash' do
     subject { params_to_unsafe_hash(raw_params) }
 
-    shared_examples_for 'populated_params_provided' do
-
-      it 'returns a hash' do
-        expect(subject).to be_a(Hash)
-      end
-
-      it 'returns a hash which responds to #with_indifferent_access' do
-        expect(subject).to respond_to(:with_indifferent_access)
-      end
-
-    end
-
     context 'passed an empty hash' do
       let(:raw_params) { {} }
       it { is_expected.to eq({}) }
@@ -44,7 +32,13 @@ describe HashableParams do
         expect(subject.keys).to match_array(['foo', 'bar'])
       end
 
-      it_behaves_like 'populated_params_provided'
+      it 'returns a hash' do
+        expect(subject).to be_a(Hash)
+      end
+
+      it 'returns a hash which responds to #with_indifferent_access' do
+        expect(subject).to respond_to(:with_indifferent_access)
+      end
     end
 
   end
